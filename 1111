@@ -221,8 +221,16 @@ end
 function Assets:Screen()
 	local ScreenAsset = GetAsset("Screen/Bracket")
 	if not IsLocal then sethiddenproperty(ScreenAsset,"OnTopOfCoreBlur",true) end
-	ScreenAsset.Name = "Bracket " .. game:GetService("HttpService"):GenerateGUID(false)
+	ScreenAsset.Name = "V " .. game:GetService("HttpService"):GenerateGUID(false)
 	ScreenAsset.Parent = IsLocal and LocalPlayer:FindFirstChildOfClass("PlayerGui") or CoreGui
+
+	if ScreenAsset:FindFirstChild("Window") and ScreenAsset.Window:FindFirstChild("Window") then
+		local mainWindow = ScreenAsset.Window.Window
+		if mainWindow:FindFirstChild("Version") then
+			mainWindow.Version:Destroy() 
+		end
+	end
+	
 	return {ScreenAsset = ScreenAsset,TableToColor = TableToColor}
 end
 function Assets:Window(ScreenAsset,Window)
